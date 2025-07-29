@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
-import { emailSchema } from './schemas/emailSchema.js';
+import { emailSchema } from './schemas/emailSchemas.js';
 import { verifyRecaptcha } from './utils/verifyRecaptcha.js';
 
 dotenv.config();
@@ -36,18 +36,18 @@ const sendEmail = async (to, subject, text) => {
 
 app.post('/send-email', async (req, res) => {
     try {
-        // Validação de dados com Yup
+        
         const { to, subject, text, recaptchaToken } = await emailSchema.validate(req.body, {
             abortEarly: false,
         });
 
-        // Verificação do reCAPTCHA
-        const isRecaptchaValid = await verifyRecaptcha(recaptchaToken);
-        if (!isRecaptchaValid) {
-            return res.status(400).json({ message: 'Falha na verificação do reCAPTCHA' });
-        }
+        
+        // const isRecaptchaValid = await verifyRecaptcha(recaptchaToken);
+        //  if (!isRecaptchaValid) {
+            //  return res.status(400).json({ message: 'Falha na verificação do reCAPTCHA' });
+        //  }
 
-        // Envio do e-mail
+        
         await sendEmail(to, subject, text);
         res.status(200).json({ message: 'E-mail enviado com sucesso' });
 
