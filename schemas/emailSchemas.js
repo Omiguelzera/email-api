@@ -7,4 +7,4 @@ export const emailSchema = yup.object().shape({
   recaptchaToken: yup.string().required('O token do reCAPTCHA é obrigatório.'),
 });
 
-export default emailShehma
+export default emailSchema
